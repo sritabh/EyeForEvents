@@ -1,0 +1,23 @@
+<!--Create new events-->
+<h1>Register New Event</h1>
+
+<!--If form comes with error messages make sure to show that with the existing form data allowing user to modify the values-->
+{% if error_message %}<p><strong>{{ error_message }}</strong></p>
+    <form action="CreateEvent" method="post">
+        {% csrf_token %}
+        {{ form }}
+        <br>
+        <input type="submit" value="Create">
+    </form>
+{% else %}
+    <form action="CreateEvent" method="post">
+        {% csrf_token %}
+        <label for="event_name">Event name: </label>
+        <input id="event_name" type="text" name="event_name">
+        <br>
+        <label for="event_description">Event Description: </label>
+        <textarea id="event_description" name="event_description" maxlength="2000"></textarea>
+        <br>
+        <input type="submit" value="Create">
+    </form>
+{% endif %}
