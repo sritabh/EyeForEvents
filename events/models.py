@@ -14,7 +14,7 @@ class Event(models.Model):
     contact_number = models.PositiveSmallIntegerField("contact_number",default=0)
     alt_contact_number = models.PositiveSmallIntegerField("alt_contact_number",default=0)
     contact_email = models.EmailField(max_length=254)
-
+    
     """
     ADD Possible params like created by and event data and last date
     User should be foreign keyed as Event will be associated with the user

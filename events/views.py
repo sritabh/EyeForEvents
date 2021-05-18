@@ -13,7 +13,6 @@ def index(request):
 
 #To register new events
 def newEvent(request):
-    #
     return render(request, 'events/create_new.html')
 
 def create_event(request):
@@ -46,14 +45,14 @@ def registerForEvent(request, event_id):
     #Register request contains Participant form
     if request.method == 'POST':
         participant_details = {
+            "email": "parti@event.com",
+            "name": "New Participant",
             "event": get_object_or_404(Event, pk=event_id)
         }
-        # create a form instance and populate it with data from the request:
-        form = ParticipantForm(request.POST)
-        participant = form.save(commit=False)
-        participant.event = get_object_or_404(Event, pk=event_id)
+        #Participant form is invisible to the user will be filled automatically by fetching whether the user is logged in or not
+        form = ParticipantForm(data=participant_details) 
         
         if form.is_valid():
-            participant.save()
-            return render(request, 'events/error.html', {'form': participant,'msg':"Successfully registered"})
+            form.save()
+            return render(request, 'events/error.html', {'form': form,'msg':"Successfully registered"})
     return render(request, 'events/error.html', {'form': form,'msg':"Something went wrong!"})
