@@ -12,11 +12,26 @@
 {% else %}
     <form action="CreateEvent" method="post">
         {% csrf_token %}
-        <label for="event_name">Event name: </label>
-        <input id="event_name" type="text" name="event_name">
+        <label for="name">Event name: </label>
+        <input id="name" type="text" name="name">
         <br>
-        <label for="event_description">Event Description: </label>
-        <textarea id="event_description" name="event_description" maxlength="2000"></textarea>
+        <label for="description">Event Description: </label>
+        <textarea id="description" name="description" maxlength="2000"></textarea>
+        <br>
+        <label for="contact_email">Contact Email: </label>
+        <input id="contact_email" type="Email" name="contact_email">
+        <br>
+        <label for="contact_number">Contact Number: </label>
+        <input id="contact_number" type="Number" name="contact_number">
+        <br>
+        <label for="alt_contact_number">Alternate Contact Number: </label>
+        <input id="alt_contact_number" type="Number" name="alt_contact_number">
+        <br>
+        <label for="max_capacity">Event Capacity: </label>
+        <input id="max_capacity" type="Number" name="max_capacity">
+        <br>
+        <label for="location">Event Location: </label>
+        <input id="location" type="text" name="location">
         <br>
         <input type="submit" value="Create">
     </form>

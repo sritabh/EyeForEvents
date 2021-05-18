@@ -10,5 +10,6 @@ urlpatterns = [
     # Ex - /events/EventRegistered
     path('EventRegistered',views.successFull,name="event_created_successfully"),
     #Example - /events/5
-    path('<int:event_id>/', views.detail, name='detail'),
+    path('<uuid:event_id>/', views.detail, name='detail'),
+    path('<uuid:event_id>/Register', views.registerForEvent, name='Register'),
 ]

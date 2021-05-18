@@ -1,12 +1,13 @@
-from django.shortcuts import render
+from django.shortcuts import get_object_or_404, render
 from django.http import HttpResponse
 from django.http import Http404, HttpResponseRedirect
-from .forms import EventForm
+from .forms import EventForm,ParticipantForm
 from .models import Event
+from django import forms
 
 # Create your views here.
 def index(request):
-    latest_events = Event.objects.order_by('-pub_date')[:10] #Top 10 Questions
+    latest_events = Event.objects.order_by('-pub_date')[:10] #Top 10 Events in the DB
     context = {'latest_events': latest_events}
     return render(request, 'events/index.html', context)
 
@@ -38,4 +39,21 @@ def detail(request, event_id):
 
 
 def successFull(request):
-    return HttpResponse("Event Successfully Registerd")
+    return HttpResponse("Event Successfully Created")
+
+
+def registerForEvent(request, event_id):
+    #Register request contains Participant form
+    if request.method == 'POST':
+        participant_details = {
+            "event": get_object_or_404(Event, pk=event_id)
+        }
+        # create a form instance and populate it with data from the request:
+        form = ParticipantForm(request.POST)
+        participant = form.save(commit=False)
+        participant.event = get_object_or_404(Event, pk=event_id)
+        
+        if form.is_valid():
+            participant.save()
+            return render(request, 'events/error.html', {'form': participant,'msg':"Successfully registered"})
+    return render(request, 'events/error.html', {'form': form,'msg':"Something went wrong!"})
