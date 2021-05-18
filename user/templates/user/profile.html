@@ -1,3 +1,12 @@
-<html>
-Hello user
-</html>
+{% extends 'user/base.html' %} {% block content %}
+
+<!--showing user's profile-->
+
+<h1>{{user.first_name}}'s PROFILE</h1>
+
+{% if user.is_authenticated %}
+
+<p>Name: {{user.first_name}} {{ user.last_name}}</p>
+<p>Email: {{user.email}}</p>
+
+{% endif %} {% endblock %}
