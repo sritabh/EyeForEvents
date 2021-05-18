@@ -1,0 +1,14 @@
+<!--Displays Events-->
+<h1>Events</h1>
+<h2>Available Events</h2>
+{% if latest_events %}
+    <ul>
+    {% for event in latest_events %}
+        <li><a href="{% url 'events:detail' event.id %}">{{ event.name }}</a></li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No Event Available.</p>
+{% endif %}
+<br>
+<a href="./create">Create Event</a>

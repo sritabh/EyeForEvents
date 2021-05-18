@@ -1,3 +1,38 @@
+import uuid
 from django.db import models
+from django.utils import timezone
+import datetime
 
-# Create your models here.
+#Event Database Model
+class Event(models.Model):
+    #FIX-ME: Change default values of parameters
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False) #unique id to differentiate between events
+    name = models.CharField("name",max_length=200) #Event name
+    description = models.CharField("description",max_length=2000,default="") #Event description
+    max_capacity = models.PositiveSmallIntegerField("max_capacity",default=0) #0 for not applicable and >0 if there's a capacity
+    location = models.CharField(max_length=500,default="")
+    contact_number = models.PositiveSmallIntegerField("contact_number",default=0)
+    alt_contact_number = models.PositiveSmallIntegerField("alt_contact_number",default=0)
+    contact_email = models.EmailField(max_length=254)
+    
+    """
+    ADD Possible params like created by and event data and last date
+    User should be foreign keyed as Event will be associated with the user
+    """
+    #last_date = models.DateTimeField(default = timezone.now())
+    #event_date = models.DateTimeField(default = timezone.now())
+    pub_date = models.DateTimeField('Created On',auto_now_add=True) #Will be used to check how old is the posted events
+    def __str__(self):
+        return self.name #For Debugging purpose
+
+class Participant(models.Model):
+    """
+    Each participant is related to a particular event
+    """
+    event = models.ForeignKey(Event, on_delete=models.CASCADE,blank=True) ##Make it many to many relation not one to many will save space
+    name = models.CharField(max_length=200,default=None)
+    email = models.EmailField(max_length=254,default=None)
+    def __str__(self):
+        return (self.email)
+    #FIX-ME: Should store user_id too so that it can be verified easi
+

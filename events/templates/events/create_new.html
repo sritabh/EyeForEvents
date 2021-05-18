@@ -1,0 +1,40 @@
+
+<!--Better create a template for the form and not write individual html code and design-->>
+<!--Create new events-->
+<h1>Register New Event</h1>
+
+<!--If form comes with error messages make sure to show that with the existing form data allowing user to modify the values-->
+{% if error_message %}<p><strong>{{ error_message }}</strong></p>
+    <form action="CreateEvent" method="post">
+        {% csrf_token %}
+        {{ form }}
+        <br>
+        <input type="submit" value="Create">
+    </form>
+{% else %}
+    <form action="CreateEvent" method="post">
+        {% csrf_token %}
+        <label for="name">Event name: </label>
+        <input id="name" type="text" name="name">
+        <br>
+        <label for="description">Event Description: </label>
+        <textarea id="description" name="description" maxlength="2000"></textarea>
+        <br>
+        <label for="contact_email">Contact Email: </label>
+        <input id="contact_email" type="Email" name="contact_email">
+        <br>
+        <label for="contact_number">Contact Number: </label>
+        <input id="contact_number" type="Number" name="contact_number">
+        <br>
+        <label for="alt_contact_number">Alternate Contact Number: </label>
+        <input id="alt_contact_number" type="Number" name="alt_contact_number">
+        <br>
+        <label for="max_capacity">Event Capacity: </label>
+        <input id="max_capacity" type="Number" name="max_capacity">
+        <br>
+        <label for="location">Event Location: </label>
+        <input id="location" type="text" name="location">
+        <br>
+        <input type="submit" value="Create">
+    </form>
+{% endif %}
