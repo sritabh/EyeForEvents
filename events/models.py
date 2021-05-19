@@ -22,8 +22,8 @@ class Event(models.Model):
     ADD Possible params like created by and event data and last date
     User should be foreign keyed as Event will be associated with the user
     """
-    #last_date = models.DateTimeField(default = timezone.now())
-    #event_date = models.DateTimeField(default = timezone.now())
+    last_date = models.DateTimeField(default = timezone.now())
+    event_date = models.DateTimeField(default = timezone.now())
     pub_date = models.DateTimeField('Created On',auto_now_add=True) #Will be used to check how old is the posted events
     def __str__(self):
         return self.name #For Debugging purpose
