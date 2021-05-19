@@ -1,4 +1,5 @@
 <!--Displays Events-->
+{% extends 'user/base.html' %} {% block content %}
 <h1>Events</h1>
 <h2>Available Events</h2>
 {% if latest_events %}
@@ -12,3 +13,5 @@
 {% endif %}
 <br>
 <a href="./create">Create Event</a>
+
+{% endblock %}

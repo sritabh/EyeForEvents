@@ -1,3 +1,4 @@
+{% extends 'user/base.html' %} {% block content %}
 {% load custom_tags %}
 {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
 
@@ -17,19 +18,15 @@
 <br>
 <strong>Slots Available: </strong>{{ event.max_capacity|subtract:event.participant_set.all }}
 <br>
+<strong>Created By: </strong>{{ event_by.get_full_name }}
+<br>
 {% for participant in event.participant_set.all %}
     <li>{{ participant.name }} </li>
 {% endfor %}
 <form action="Register" method="post">
     {% csrf_token %}
     <!--Filling out the details in the views.py-->
-    <!---div>
-        <label for="name">Participant Name: </label>
-        <input id="name" type="text" name="name" value="Participant Name">
-        <br>
-        <label for="email">Participant Email: </label>
-        <input id="email" type="email" name="email" value="parti@event.com">
-        <br>
-    </div-->
     <input type="submit" value = "Register"/>
 </form>
+
+{% endblock %}

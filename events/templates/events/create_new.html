@@ -1,6 +1,7 @@
 
-<!--Better create a template for the form and not write individual html code and design-->>
+<!--Better create a template for the form and not write individual html code and design-->
 <!--Create new events-->
+{% extends 'user/base.html' %} {% block content %}
 <h1>Register New Event</h1>
 
 <!--If form comes with error messages make sure to show that with the existing form data allowing user to modify the values-->
@@ -38,3 +39,4 @@
         <input type="submit" value="Create">
     </form>
 {% endif %}
+{% endblock %}

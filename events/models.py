@@ -2,6 +2,7 @@ import uuid
 from django.db import models
 from django.utils import timezone
 import datetime
+from django.conf import settings
 
 #Event Database Model
 class Event(models.Model):
@@ -14,6 +15,8 @@ class Event(models.Model):
     contact_number = models.PositiveSmallIntegerField("contact_number",default=0)
     alt_contact_number = models.PositiveSmallIntegerField("alt_contact_number",default=0)
     contact_email = models.EmailField(max_length=254)
+    created_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE,blank=True,related_name="created_by") #One to Many relationship 
+    participated_in = models.ManyToManyField(settings.AUTH_USER_MODEL,related_name="participated_in") #One to Many relationship showing user participated in events relation
     
     """
     ADD Possible params like created by and event data and last date
@@ -29,7 +32,7 @@ class Participant(models.Model):
     """
     Each participant is related to a particular event
     """
-    event = models.ForeignKey(Event, on_delete=models.CASCADE,blank=True) ##Make it many to many relation not one to many will save space
+    event = models.ForeignKey(Event, on_delete=models.CASCADE,blank=True) #One to Many relationship - many participant can participate in one event
     name = models.CharField(max_length=200,default=None)
     email = models.EmailField(max_length=254,default=None)
     def __str__(self):
