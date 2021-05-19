@@ -17,7 +17,7 @@ def profile(request):
 def login_user(request):
     if request.method == "POST":
         # if someone fills out form , Post it
-        username = request.POST["email"]
+        username = request.POST["username"]
         password = request.POST["password"]
 
         #authenticate takes username and password for the cuurent case, checks them against each authentication backend
