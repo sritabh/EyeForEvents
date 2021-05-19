@@ -2,13 +2,18 @@ from django.shortcuts import render,redirect
 from django.contrib.auth import authenticate, login,logout
 from django.contrib.auth.forms import UserCreationForm,UserChangeForm
 from django.contrib import messages
-from.forms import SignUpForm
+from .forms import SignUpForm
 from django.http import HttpResponse
 from django.contrib.auth.models import User
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
+
+#If Not Authenticated show user a path to authenticate i.e. login or register option
+#Check whether the user is authenticated if not send user to get authentication
+@login_required(login_url='/user/login/')
 def home(request):
-    return HttpResponse("<h1>Welcome to Eye4Events!!!<h1>")
+    return redirect("profile")
 
 #profile page request
 def profile(request):
