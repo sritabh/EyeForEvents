@@ -8,4 +8,26 @@
 <p>Name: {{user.first_name}} {{ user.last_name}}</p>
 <p>Email: {{user.email}}</p>
 
+<h2>Your Events</h2>
+<h3>Registered Event:</h3>
+{% if user.participated_in %}
+    <ul>
+    {% for event in user.participated_in.all %}
+        <li><a href="{% url 'events:detail' event.id %}">{{ event.name }}</a></li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No Event Available.</p>
+{% endif %}
+
+<h3>Events By You:</h3>
+{% if user.created_by.all %}
+    <ul>
+    {% for event in user.created_by.all %}
+        <li><a href="{% url 'events:detail' event.id %}">{{ event.name }}</a></li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No Event Available.</p>
+{% endif %}
 {% endif %} {% endblock %}
