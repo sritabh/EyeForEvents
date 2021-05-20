@@ -59,7 +59,19 @@ def registerForEvent(request, event_id):
             "name": user.get_full_name(),
             "event": event
         }
-        #user.participated_in.create(event)
+        """
+        Check if the user has already participated in the event or not
+        """
+        #If the participant with same event exists then don't allow user to participate again
+        if event.participant_set.filter(email=user.email).count() >0:
+            return render(request, 'events/event_details.html', {'event': event,'event_by':event.created_by,'msg':"You have already registered for this event!"})
+        
+        """
+        Check if the event slot is available or not
+        NOTE: 0 in event.max_capacity will denote that there's no caping of participants make sure it's exception
+        """
+        if event.participant_set.all().count()>=event.max_capacity and event.max_capacity !=0:
+            return render(request, 'events/event_details.html', {'event': event,'event_by':event.created_by,'msg':"No slot/seat is available, event is full!"})
         user.participated_in.add(event)
         #Participant form is invisible to the user will be filled automatically by fetching whether the user is logged in or not
         form = ParticipantForm(data=participant_details) 

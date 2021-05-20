@@ -1,6 +1,6 @@
 {% extends 'user/base.html' %} {% block content %}
 {% load custom_tags %}
-{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+{% if msg %}<p><strong>{{ msg }}</strong></p>{% endif %}
 <h1>{{event.name}}</h1>
 <p>Event Image - <a href="{{event.event_image.url}}">{{ event.event_image.url }}</a></p><br>
 <strong>Description: </strong>
@@ -25,6 +25,7 @@
 <form action="Register" method="post">
     {% csrf_token %}
     <!--Filling out the details in the views.py-->
+
     <input type="submit" value = "Register"/>
 </form>
 
