@@ -6,17 +6,20 @@
 
 <!--If form comes with error messages make sure to show that with the existing form data allowing user to modify the values-->
 {% if error_message %}<p><strong>{{ error_message }}</strong></p>
-    <form action="CreateEvent" method="post">
+    <form action="CreateEvent" enctype="multipart/form-data" method="post">
         {% csrf_token %}
         {{ form }}
         <br>
         <input type="submit" value="Create">
     </form>
 {% else %}
-    <form action="CreateEvent" method="post">
+    <form action="CreateEvent" enctype="multipart/form-data" method="post">
         {% csrf_token %}
         <label for="name">Event name: </label>
         <input id="name" type="text" name="name">
+        <br>
+        <label for="event_image">Image: </label>
+        <input id="event_image" type="file" accept="image/*" name="event_image">
         <br>
         <label for="description">Event Description: </label>
         <textarea id="description" name="description" maxlength="2000"></textarea>
@@ -32,10 +35,10 @@
         <br>
         <br>
         <label for="last_date">Last Date of Registeration: </label>
-        <input id="last_date" type="date" name="last_date">
+        <input id="last_date" type="datetime-local" name="last_date">
         <br>
         <label for="event_date">Event On: </label>
-        <input id="event_date" type="date" name="event_date">
+        <input id="event_date" type="datetime-local" name="event_date">
         <br>
         <label for="max_capacity">Event Capacity: </label>
         <input id="max_capacity" type="Number" name="max_capacity">

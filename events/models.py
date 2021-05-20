@@ -17,13 +17,9 @@ class Event(models.Model):
     contact_email = models.EmailField(max_length=254)
     created_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE,blank=True,related_name="created_by") #One to Many relationship 
     participated_in = models.ManyToManyField(settings.AUTH_USER_MODEL,related_name="participated_in") #One to Many relationship showing user participated in events relation
-    
-    """
-    ADD Possible params like created by and event data and last date
-    User should be foreign keyed as Event will be associated with the user
-    """
-    last_date = models.DateTimeField(default = timezone.now())
-    event_date = models.DateTimeField(default = timezone.now())
+    event_image = models.ImageField(upload_to='events/'+str(uuid.uuid4()),blank=True,null=True) #Image for the event not needed but would be better if we get one
+    last_date = models.DateTimeField(default = timezone.now()) #Last date till the event registeration is available
+    event_date = models.DateTimeField(default = timezone.now()) #Date of the event
     pub_date = models.DateTimeField('Created On',auto_now_add=True) #Will be used to check how old is the posted events
     def __str__(self):
         return self.name #For Debugging purpose
