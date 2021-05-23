@@ -1,129 +1,134 @@
 {% extends 'user/base.html' %} {% block content %}
 {% load custom_tags %}
-{% load static %}
-{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+<html>
+    <script>
+        function showCountDown(lastDate){
+            console.log(new Date(lastDate))
+            //countdown till last date of registeration
+            var countDownDate = new Date(lastDate).getTime();
+            var x = setInterval(function() {
 
-<div class="card text-white pb-0 text-center" id="card1">
-<img class="card-img" src ="{% static 'events/images/event2.jpeg' %}" alt="Card image">
-<div class="card-img-overlay">
-<br><br><br>
-<h1 class="card-title"> {{event.name}} </h1>
-<p id="event" class="card-text">{{ event.description }}</p><br>
-<form action="Register" method="post">
-    {% csrf_token %}
-    
-    <!--Filling out the details in the views.py-->
-    <input type="submit" value = "Register" class="btn btn-danger" style="width:30%;"/>
-</form><br><br><br><br><br>
-<p class="card-text" style="text-align: right; background-color:#00000080;">
-  <i class="bi bi-person-circle"></i>
-  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
-      <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
-      <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
-  </svg>
-  <i><strong> Created By ~ </strong>{{ event_by.get_full_name }}</i>
-</p>
-</div>
-</div>
-<br><br>
-<!--<strong>Description: </strong>-->
+            // Get today's date and time
+            var now = new Date().getTime();
 
+            // Find the distance between now and the count down date
+            var distance = countDownDate - now;
 
-<div id = "countdown" class="card text-center bg-danger">
-            <h4 id="countdownbx" class="card-title text-black">
-              Starting <i> {{event.name}} </i> in : <br></h4>
+            // Time calculations for days, hours, minutes and seconds
+            var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            // Display the result in the element with id="demo"
+            document.getElementById("day").innerHTML = days + "d ";
+            document.getElementById("hours").innerHTML = hours + "h ";
+            document.getElementById("minutes").innerHTML = minutes + "m ";
+            document.getElementById("seconds").innerHTML = seconds + "s ";
+
+            // If the count down is finished, write some text
+            if (distance < 0) {
+                clearInterval(x);
+                document.getElementById("demo").innerHTML = "EXPIRED";
+            }
+            }, 1000);
+        }
+    </script>
+    <body onload="showCountDown('{{event.last_date.isoformat}}')">
+        {% load static %}
+        {% if msg %}<p><strong>{{ msg }}</strong></p>{% endif %}
+
+        <div class="card text-white pb-0 text-center" id="card1">
+        <img class="card-img" src ="{{event.event_image.url}}" alt="Card image" style="max-height:500px; object-fit:cover;">
+        <div class="card-img-overlay">
+        <br><br><br>
+        <h1 class="card-title"> {{event.name}} </h1>
+        <p id="event" class="card-text">{{ event.description }}</p><br>
+        <form action="Register" method="post">
+            {% csrf_token %}
+            
+            <!--Filling out the details in the views.py-->
+            <input type="submit" value = "Register" class="btn btn-danger" style="width:30%;"/>
+        </form><br><br><br><br><br>
+        <p class="card-text" style="text-align: right; background-color:#00000080;">
+        <i class="bi bi-person-circle"></i>
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
+            <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
+            <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
+        </svg>
+        <i><strong> Created By ~ </strong>{{ event_by.get_full_name }}</i>
+        </p>
+        </div>
+        </div>
+        <br><br>
+        <!--<strong>Description: </strong>-->
+        <strong>Description: </strong>
+        <div id = "countdown" class="card text-center bg-danger">
+                    <h4 id="countdownbx" class="card-title text-black">
+                    Registeration for <i> {{event.name}} </i> : <br></h4>
+                    <br>
+                    <div class="class row " style="display: grid; grid-template-columns: auto auto auto auto; grid-column-gap: 30px;margin-left: 5% ;margin-bottom: 5% ;width:90% ;height:300%;">
+                        <div id="day" class="card-text col text-dark" style="font-size: 200%; font-weight: bold ;background-color:#00000020; padding-top:2%; padding-bottom:2%;">NA</div>
+                        <div id="hours" class="card-text col text-dark" style="font-size: 200%; font-weight: bold ;background-color:#00000020; padding-top:2%; padding-bottom:2%;">NA</div>
+                        <div id="minutes" class="card-text col text-light" style="font-size: 200%; font-weight: bold ; font-style: italic;background-color:#00000020; padding-top:2%; padding-bottom:2%;">NA</div>
+                        <div id="seconds" class="card-text col text-light" style="font-size: 200%; font-weight: bold ; font-style: italic;background-color:#00000020; padding-top:2%; padding-bottom:2%;">NA</div>
+                    </div>
+                
+        </div>
+
+        <br>
+        <br><br><br>
+
+        <br>
+        <strong>Event date: </strong>{{ event.event_date }}
+        <br>
+
+        <strong>Max Capacity: </strong>{{ event.max_capacity }}
+        <br>
+        <strong>Slots Available: </strong>{{ event.max_capacity|subtract:event.participant_set.all }}
+        <br>
+        {% for participant in event.participant_set.all %}
+            <li>{{ participant.name }} </li>
+        {% endfor %}
+
+        <br>
+
+        <div class="card-footer text-white bg-dark">
             <br>
-            <div class="class row " style="display: grid; grid-template-columns: auto auto auto auto; grid-column-gap: 30px;margin-left: 5% ;margin-bottom: 5% ;width:90% ;height:300%;">
-                <div id="day" class="card-text col text-dark" style="font-size: 200%; font-weight: bold ;background-color:#00000020; padding-top:2%; padding-bottom:2%;">NA</div>
-                <div id="hours" class="card-text col text-dark" style="font-size: 200%; font-weight: bold ;background-color:#00000020; padding-top:2%; padding-bottom:2%;">NA</div>
-                <div id="minutes" class="card-text col text-light" style="font-size: 200%; font-weight: bold ; font-style: italic;background-color:#00000020; padding-top:2%; padding-bottom:2%;">NA</div>
-                <div id="seconds" class="card-text col text-light" style="font-size: 200%; font-weight: bold ; font-style: italic;background-color:#00000020; padding-top:2%; padding-bottom:2%;">NA</div>
+            <div class="card-footer-text">
+                <i class="bi bi-envelope"></i>
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-envelope" viewBox="0 0 16 16">
+                    <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1H2zm13 2.383-4.758 2.855L15 11.114v-5.73zm-.034 6.878L9.271 8.82 8 9.583 6.728 8.82l-5.694 3.44A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.739zM1 11.114l4.758-2.876L1 5.383v5.73z"/>
+                </svg>
+                <strong> Contact Email : </strong>{{ event.contact_email }}
             </div>
-        
-</div>
-
-<br>
-<script>
-var countDownDate = new Date("May 30, 2021,19:00:00").getTime();
-var x = setInterval(function() {
-
-  // Get today's date and time
-  var now = new Date().getTime();
-
-  // Find the distance between now and the count down date
-  var distance = countDownDate - now;
-
-  // Time calculations for days, hours, minutes and seconds
-  var days = Math.floor(distance / (1000 * 60 * 60 * 24));
-  var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-  var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-  var seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-  // Display the result in the element with id="demo"
-  document.getElementById("day").innerHTML = days + "d ";
-  document.getElementById("hours").innerHTML = hours + "h ";
-  document.getElementById("minutes").innerHTML = minutes + "m ";
-  document.getElementById("seconds").innerHTML = seconds + "s ";
-
-  // If the count down is finished, write some text
-  if (distance < 0) {
-    clearInterval(x);
-    document.getElementById("demo").innerHTML = "EXPIRED";
-  }
-}, 1000);
-
-</script>
-<br><br><br>
-
-<br>
-<strong>Event date: </strong>{{ event.event_date }}
-<br>
-
-<strong>Max Capacity: </strong>{{ event.max_capacity }}
-<br>
-<strong>Slots Available: </strong>{{ event.max_capacity|subtract:event.participant_set.all }}
-<br>
-{% for participant in event.participant_set.all %}
-    <li>{{ participant.name }} </li>
-{% endfor %}
-
-<br>
-
-<div class="card-footer text-white bg-dark">
-     <br>
-     <div class="card-footer-text">
-          <i class="bi bi-envelope"></i>
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-envelope" viewBox="0 0 16 16">
-              <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1H2zm13 2.383-4.758 2.855L15 11.114v-5.73zm-.034 6.878L9.271 8.82 8 9.583 6.728 8.82l-5.694 3.44A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.739zM1 11.114l4.758-2.876L1 5.383v5.73z"/>
-          </svg>
-         <strong> Contact Email : </strong>{{ event.contact_email }}
-     </div>
-    
-     <div class="card-footer-text">
-         <i class="bi bi-phone"></i>
-         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-phone" viewBox="0 0 16 16">
-              <path d="M11 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h6zM5 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H5z"/>
-              <path d="M8 14a1 1 0 1 0 0-2 1 1 0 0 0 0 2z"/>
-         </svg>
-         <strong>Contact Number : </strong>{{ event.contact_number }}
-      </div>
-     <div class="card-footer-text">
-         <i class="bi bi-phone"></i>
-         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-phone" viewBox="0 0 16 16">
-              <path d="M11 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h6zM5 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H5z"/>
-              <path d="M8 14a1 1 0 1 0 0-2 1 1 0 0 0 0 2z"/>
-         </svg>
-         <strong>Alternate Contact Number : </strong>{{ event.alt_contact_number }}
-      </div>
-     <div class="card-footer-text">
-         <i class="bi bi-geo-alt"></i>
-         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-geo-alt" viewBox="0 0 16 16">
-            <path d="M12.166 8.94c-.524 1.062-1.234 2.12-1.96 3.07A31.493 31.493 0 0 1 8 14.58a31.481 31.481 0 0 1-2.206-2.57c-.726-.95-1.436-2.008-1.96-3.07C3.304 7.867 3 6.862 3 6a5 5 0 0 1 10 0c0 .862-.305 1.867-.834 2.94zM8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10z"/>
-            <path d="M8 8a2 2 0 1 1 0-4 2 2 0 0 1 0 4zm0 1a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
-         </svg>
-     <strong>Location : </strong>{{ event.location }}
-     </div>
-     <br> 
-</div>
-
+            
+            <div class="card-footer-text">
+                <i class="bi bi-phone"></i>
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-phone" viewBox="0 0 16 16">
+                    <path d="M11 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h6zM5 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H5z"/>
+                    <path d="M8 14a1 1 0 1 0 0-2 1 1 0 0 0 0 2z"/>
+                </svg>
+                <strong>Contact Number : </strong>{{ event.contact_number }}
+            </div>
+            <div class="card-footer-text">
+                <i class="bi bi-phone"></i>
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-phone" viewBox="0 0 16 16">
+                    <path d="M11 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h6zM5 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H5z"/>
+                    <path d="M8 14a1 1 0 1 0 0-2 1 1 0 0 0 0 2z"/>
+                </svg>
+                <strong>Alternate Contact Number : </strong>{{ event.alt_contact_number }}
+            </div>
+            <div class="card-footer-text">
+                <i class="bi bi-geo-alt"></i>
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-geo-alt" viewBox="0 0 16 16">
+                    <path d="M12.166 8.94c-.524 1.062-1.234 2.12-1.96 3.07A31.493 31.493 0 0 1 8 14.58a31.481 31.481 0 0 1-2.206-2.57c-.726-.95-1.436-2.008-1.96-3.07C3.304 7.867 3 6.862 3 6a5 5 0 0 1 10 0c0 .862-.305 1.867-.834 2.94zM8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10z"/>
+                    <path d="M8 8a2 2 0 1 1 0-4 2 2 0 0 1 0 4zm0 1a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
+                </svg>
+            <strong>Location : </strong>{{ event.location }}
+            </div>
+            <br> 
+        </div>
+    </body>
+</html>
 {% endblock %}

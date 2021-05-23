@@ -30,8 +30,7 @@ def create_event(request):
             event = form.save(commit=False)
             event.created_by = request.user
             event.save()
-            return render(request,'events/debug.html')
-            #return HttpResponseRedirect('EventRegistered')
+            return render(request,'user/profile.html',{'msg':'Event Successfully Created'})
 
     return render(request, 'events/create_new.html', {'form': form,'error_message':"Something went wrong!"}) ##Incase above value is not returned keep the form values as it's
 

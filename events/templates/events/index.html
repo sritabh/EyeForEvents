@@ -2,35 +2,12 @@
 {% extends 'user/base.html' %} {% block content %}
 <h1>Events</h1>
 <br>
-<!--
-<h2>Available Events</h2>
-{% if latest_events %}
-
-    {% for event in latest_events %}
-        <div class="row-cols-1 row-cols-sm-3 ">
-            <div class="col">
-                <div class="card">
-                    
-                    <div class="card-body">
-                    <h5 class="card-title"><a href="{% url 'events:detail' event.id %}">{{ event.name }}</a></h5>
-                    <p class="card-text">{{event.description}}</p>
-                </div>
-            </div>
-        </div>
-        <br>
-    {% endfor %}
-    
-{% else %}
-    <p>No Event Available.</p>
-{% endif %}
-<br><br>
--->
 {%load static %}
 <div class="row row-cols-1 row-cols-md-3 g-4" style="display: grid; grid-template-columns: repeat(3, 1fr);grid-auto-rows: auto; grid-gap: 3rem;">
 {% for event in latest_events %}
   <div class="row" >
     <div class="card" style="overflow-x: hidden; overflow-y: auto; text-align:justify;">
-      <img src="{% static 'events/images/event2.jpeg' %}" class="card-img-top" alt="...">
+      <img src="{{event.event_image.url}}" class="card-img-top" alt="...">
       <div class="card-body">
         <h5 class="card-title"><a href="{% url 'events:detail' event.id %}">{{event.name}}</a></h5>
         <p class="card-text">{{event.description}}</p>

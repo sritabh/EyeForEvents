@@ -9,11 +9,10 @@
 {% if error_message %}<p><strong>{{ error_message }}</strong></p>
     <form action="CreateEvent" enctype="multipart/form-data" method="post">
         {% csrf_token %}
+        <h1>Form Debugger</h1>
         {{ form }}
-        <br>
-        <input type="submit" value="Create">
     </form>
-{% else %}
+{% endif %}
 <div style="width:70%; margin-left : 15%" class="card text-center text-light">
 <img class="card-img" src ="{% static 'events/images/create_event.jpg' %}" alt="Card image">
 <br>
@@ -23,39 +22,38 @@
         <br>
         {% csrf_token %}
         <label for="name">Event name: &emsp;</label>
-        <input id="name" type="text" name="name">
+        <input id="name" type="text" name="name" value="{{form.name.value}}" required>
         <br>
         <label for="event_image">Image: </label>
-        <input id="event_image" type="file" accept="image/*" name="event_image">
+        <input id="event_image" type="file" accept="image/*" name="event_image" value="{{form.event_image.value}}" required>
         <br>
         <label for="description">Event Description: </label>
-        <textarea id="description" name="description" maxlength="2000"></textarea>
+        <textarea id="description" name="description" maxlength="2000" value="{{form.description.value}}" required></textarea>
         <br>
         <label for="contact_email">Contact Email: &emsp; </label>
-        <input id="contact_email" type="Email" name="contact_email">
+        <input id="contact_email" type="Email" name="contact_email" value="{{form.contact_email.value}}" required>
         <br>
         <label for="contact_number">Contact Number1: </label>
-        <input id="contact_number" type="tel" pattern="[0-9]{10}" placeholder="9996669996" name="contact_number">
+        <input id="contact_number" type="tel" pattern="[0-9]{10}" value="{{form.contact_number.value}}" placeholder="9996669996" name="contact_number" required>
         <br>
         <label for="alt_contact_number">Contact Number2: </label>
-        <input id="alt_contact_number" type="tel" pattern="[0-9]{10}" placeholder="9996669996" name="alt_contact_number">
+        <input id="alt_contact_number" type="tel" pattern="[0-9]{10}" value="{{form.alt_contact_number.value}}" placeholder="9996669996" name="alt_contact_number" required>
         <br>
         <label for="last_date">Last Date :  &ensp;</label>
-        <input id="last_date" type="date" name="last_date">
+        <input id="last_date" type="datetime-local" value="{{form.last_date.value}}" name="last_date" required>
         <br>
         <label for="event_date">Event On: &emsp;</label>
-        <input id="event_date" type="date" name="event_date">
+        <input id="event_date" type="datetime-local" value="{{form.event_date.value}}" name="event_date" required>
         <br>
         <label for="max_capacity">Event Capacity: </label>
-        <input id="max_capacity" type="Number" name="max_capacity">
+        <input id="max_capacity" type="Number" value="{{form.max_capacity.value}}" name="max_capacity" required>
         <br>
         <label for="location">Event Location: </label>
-        <input id="location" type="text" name="location">
+        <input id="location" type="text" value="{{form.location.value}}" name="location" required>
         <br><br>
         <input type="submit" value="Create" class="btn btn-danger">
     </form>
     <br><br>
     </div>
 </div>
-{% endif %}
 {% endblock %}

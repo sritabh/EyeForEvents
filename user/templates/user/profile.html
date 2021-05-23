@@ -4,7 +4,7 @@
 {% if user.is_authenticated %}
 
 <h1>Hey {{user.first_name}} !! Welcome to Eye4Events</h1>
-
+<center><strong>{{ msg }}</strong></center>
 <p>Name: {{user.first_name}} {{ user.last_name}}</p>
 <p>Email: {{user.email}}</p>
 
