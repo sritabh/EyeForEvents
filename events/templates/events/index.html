@@ -1,17 +1,77 @@
 <!--Displays Events-->
 {% extends 'user/base.html' %} {% block content %}
 <h1>Events</h1>
+<br>
+<!--
 <h2>Available Events</h2>
 {% if latest_events %}
-    <ul>
+
     {% for event in latest_events %}
-        <li><a href="{% url 'events:detail' event.id %}">{{ event.name }}</a></li>
+        <div class="row-cols-1 row-cols-sm-3 ">
+            <div class="col">
+                <div class="card">
+                    
+                    <div class="card-body">
+                    <h5 class="card-title"><a href="{% url 'events:detail' event.id %}">{{ event.name }}</a></h5>
+                    <p class="card-text">{{event.description}}</p>
+                </div>
+            </div>
+        </div>
+        <br>
     {% endfor %}
-    </ul>
+    
 {% else %}
     <p>No Event Available.</p>
 {% endif %}
-<br>
-<a href="./create">Create Event</a>
+<br><br>
+-->
+{%load static %}
+<div class="row row-cols-1 row-cols-md-3 g-4" style="display: grid; grid-template-columns: repeat(3, 1fr);grid-auto-rows: auto; grid-gap: 3rem;">
+{% for event in latest_events %}
+  <div class="row" >
+    <div class="card" style="overflow-x: hidden; overflow-y: auto; text-align:justify;">
+      <img src="{% static 'events/images/event2.jpeg' %}" class="card-img-top" alt="...">
+      <div class="card-body">
+        <h5 class="card-title"><a href="{% url 'events:detail' event.id %}">{{event.name}}</a></h5>
+        <p class="card-text">{{event.description}}</p>
+      </div>
+    </div>
+  </div>
+{% endfor %}
+</div>
+<br><br><br>
+<a href="./create" class="btn btn-danger">Create Event</a>
+<br><br><br>
 
+<div class="card-footer text-white bg-dark">
+     <br>
+     <div class="card-footer-text">
+          <i class="bi bi-envelope"></i>
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-envelope" viewBox="0 0 16 16">
+              <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1H2zm13 2.383-4.758 2.855L15 11.114v-5.73zm-.034 6.878L9.271 8.82 8 9.583 6.728 8.82l-5.694 3.44A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.739zM1 11.114l4.758-2.876L1 5.383v5.73z"/>
+          </svg>
+         <strong> Contact Email : </strong> alishaanand86.aa@gmail.com
+     </div>
+     <br>
+     <div class="card-footer-text">
+          <i class="bi bi-envelope"></i>
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-envelope" viewBox="0 0 16 16">
+              <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1H2zm13 2.383-4.758 2.855L15 11.114v-5.73zm-.034 6.878L9.271 8.82 8 9.583 6.728 8.82l-5.694 3.44A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.739zM1 11.114l4.758-2.876L1 5.383v5.73z"/>
+          </svg>
+         <strong> Contact Email : </strong> sobydanny@gmail.com
+     </div>
+     <br>
+     <div class="card-footer-text">
+          <i class="bi bi-envelope"></i>
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-envelope" viewBox="0 0 16 16">
+              <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1H2zm13 2.383-4.758 2.855L15 11.114v-5.73zm-.034 6.878L9.271 8.82 8 9.583 6.728 8.82l-5.694 3.44A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.739zM1 11.114l4.758-2.876L1 5.383v5.73z"/>
+          </svg>
+         <strong> Contact Email : </strong> anushamr141022@gmail.com
+     </div>
+    
+      
+     
+     <br> 
+</div>
 {% endblock %}
+

@@ -2,7 +2,8 @@
 <!--Better create a template for the form and not write individual html code and design-->
 <!--Create new events-->
 {% extends 'user/base.html' %} {% block content %}
-<h1>Register New Event</h1>
+{% load static %}
+<center><h1>Register New Event</h1></center>
 
 <!--If form comes with error messages make sure to show that with the existing form data allowing user to modify the values-->
 {% if error_message %}<p><strong>{{ error_message }}</strong></p>
@@ -13,28 +14,33 @@
         <input type="submit" value="Create">
     </form>
 {% else %}
-    <form action="CreateEvent" method="post">
+<div style="width:70%; margin-left : 15%" class="card text-center text-light">
+<img class="card-img" src ="{% static 'events/images/create_event.jpg' %}" alt="Card image">
+<br>
+<div class="card-img-overlay">
+    
+    <form style = "background-color:#00000080; padding-bottom: 2%;" action="CreateEvent" method="post" class="card-text">
+        <br>
         {% csrf_token %}
-        <label for="name">Event name: </label>
+        <label for="name">Event name: &emsp;</label>
         <input id="name" type="text" name="name">
         <br>
         <label for="description">Event Description: </label>
         <textarea id="description" name="description" maxlength="2000"></textarea>
         <br>
-        <label for="contact_email">Contact Email: </label>
+        <label for="contact_email">Contact Email: &emsp; </label>
         <input id="contact_email" type="Email" name="contact_email">
         <br>
-        <label for="contact_number">Contact Number: </label>
-        <input id="contact_number" type="Number" name="contact_number">
+        <label for="contact_number">Contact Number1: </label>
+        <input id="contact_number" type="tel" pattern="[0-9]{10}" placeholder="9996669996" name="contact_number">
         <br>
-        <label for="alt_contact_number">Alternate Contact Number: </label>
-        <input id="alt_contact_number" type="Number" name="alt_contact_number">
+        <label for="alt_contact_number">Contact Number2: </label>
+        <input id="alt_contact_number" type="tel" pattern="[0-9]{10}" placeholder="9996669996" name="alt_contact_number">
         <br>
-        <br>
-        <label for="last_date">Last Date of Registeration: </label>
+        <label for="last_date">Last Date :  &ensp;</label>
         <input id="last_date" type="date" name="last_date">
         <br>
-        <label for="event_date">Event On: </label>
+        <label for="event_date">Event On: &emsp;</label>
         <input id="event_date" type="date" name="event_date">
         <br>
         <label for="max_capacity">Event Capacity: </label>
@@ -42,8 +48,11 @@
         <br>
         <label for="location">Event Location: </label>
         <input id="location" type="text" name="location">
-        <br>
-        <input type="submit" value="Create">
+        <br><br>
+        <input type="submit" value="Create" class="btn btn-danger">
     </form>
+    <br><br>
+    </div>
+</div>
 {% endif %}
 {% endblock %}
