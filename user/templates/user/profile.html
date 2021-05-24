@@ -3,13 +3,71 @@
 <!--showing user's profile-->
 {% if user.is_authenticated %}
 
-<h1>Hey {{user.first_name}} !! Welcome to Eye4Events</h1>
-<center><strong>{{ msg }}</strong></center>
-<p>Name: {{user.first_name}} {{ user.last_name}}</p>
-<p>Email: {{user.email}}</p>
+<style>
+  .bg {
+    animation: slide 3s ease-in-out infinite alternate;
+    background-image: linear-gradient(-60deg, #6c3 50%, #09f 50%);
+    bottom: 0;
+    left: -50%;
+    opacity: 0.5;
+    position: fixed;
+    right: -50%;
+    top: 0;
+    z-index: -1;
+  }
 
-<h2>Your Events</h2>
-<h3>Registered Event:</h3>
+  .bg2 {
+    animation-direction: alternate-reverse;
+    animation-duration: 4s;
+  }
+
+  .bg3 {
+    animation-duration: 5s;
+  }
+
+  .content {
+    background-color: rgba(255, 255, 255, 0.8);
+    border-radius: 0.5em;
+    box-shadow: 0 0 0.25em rgba(0, 0, 0, 0.25);
+    box-sizing: border-box;
+    left: 50%;
+    padding: 3vmin;
+    position:fixed;
+    width: 50%;
+    text-align: center;
+    top: 60%;
+    transform: translate(-50%, -50%);
+  }
+
+  h1 {
+    font-family: monospace;
+  }
+
+  @keyframes slide {
+    0% {
+      transform: translateX(-25%);
+    }
+    100% {
+      transform: translateX(25%);
+    }
+  }
+</style>
+
+<div class="bg"></div>
+<div class="bg bg2"></div>
+<h1>
+  Hey {{user.first_name}} !!<br />
+  Welcome to EyeForEvents
+</h1>
+<br>
+<div class="bg bg3"></div>
+<br>
+<div class="content">
+<h4 class="text-primary">Personal details</h4>
+<h6>Name: {{user.first_name}} {{ user.last_name}}<h6>
+        <h6>Email: {{user.email}}</h6>
+
+<h4 class="text-primary pt-2">Registered Event:</h4>
 {% if user.participated_in %}
     <ul>
     {% for event in user.participated_in.all %}
@@ -20,7 +78,8 @@
     <p>No Event Available.</p>
 {% endif %}
 
-<h3>Events By You:</h3>
+
+<h4 class="text-primary">Events By You:</h4>
 {% if user.created_by.all %}
     <ul>
     {% for event in user.created_by.all %}
@@ -30,4 +89,8 @@
 {% else %}
     <p>No Event Available.</p>
 {% endif %}
-{% endif %} {% endblock %}
+</div>
+{% endif%}
+{% endblock %}
+
+

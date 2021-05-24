@@ -1,34 +1,41 @@
-{% extends 'user/base.html' %} {% block content %}
+{% extends 'user/base.html' %} {% block content %} {% if error_message %}
+<p><strong>{{ error_message }}</strong></p>
+{% endif %}
 
-<h2 class="text-center">Login</h2>
+<div
+  class="border bg-light border-dark my-4 pb-4"
+  style="background-color: #b3ecff"
+>
+  <div class="bg-info">
+    <h2 class="text-center text-white" style="background: #004d66">LOGIN</h2>
+  </div>
+  <br />
+  <div class="col-md-6 offset-md-3 pt-5 pb-4" style="background-color: #b3ecff">
+    <!--takes to login page using POST-->
 
-<div class="col-md-6 offset-md-3">
+    <form method="POST" action="{% url 'login' %}">
+      {% csrf_token %}
 
+      <div class="form-group">
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Enter your Email"
+          name="email"
+        />
+      </div>
+      <div class="form-group">
+        <input
+          type="password"
+          class="form-control"
+          placeholder="Enter Password"
+          name="password"
+        />
+      </div>
 
-<!--takes to login page using POST-->
-
-  <form method="POST" action="{% url 'login' %}">
-    {% csrf_token %}
-
-    <div class="form-group">
-      <input
-        type="text"
-        class="form-control"
-        placeholder="Enter your Email"
-        name="email"
-      />
-    </div>
-    <div class="form-group">
-      <input
-        type="password"
-        class="form-control"
-        placeholder="Enter Password"
-        name="password"
-      />
-    </div>
-
-    <button type="submit" class="btn btn-secondary">Login</button>
-  </form>
+      <button type="submit" class="btn btn-primary">Login</button>
+    </form>
+  </div>
 </div>
 
 {% endblock %}

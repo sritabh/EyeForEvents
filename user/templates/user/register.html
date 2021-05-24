@@ -1,40 +1,39 @@
-{% extends 'user/base.html' %}
+{% extends 'user/base.html' %} {% block content %} {% load static %}
+<div
+  class="border border-dark my-4 pb-4"
+  style="background: #b3ecff; background: (#b3ecff, 0.5)"
+>
+  <div class="bg-info">
+    <h2 class="text-center text-white fs-2" style="background-color: #004d66">
+      REGISTER
+    </h2>
+  </div>
 
-{% block content %}
-<h2 class ="text-center"> Register </h2>
+  <div class="col-md-6 offset-md-3 pt-5 pb-4" style="opacity: default">
+    <!--in register page when POST -->
+    <form
+      method="POST"
+      action="{% url 'register' %}"
+      style="font-weight: bold; color: #000000"
+    >
+      {% csrf_token %} {% if form.errors %}
+      <div class="alert alert-danger alart-dismissable" role="alert">
+        <button class="close" data-dismiss="alert">
+          <small><sup>x</sup></small>
+        </button>
 
-<div class = "col-md-6 offset-md-3"> 
+        {% for field in form%} {% if field.errors%} {{field.errors}} {% endif%}
+        {% endfor %}
+      </div>
 
-<!--in register page when POST -->
-<form method="POST" action="{% url 'register' %}">
-		{% csrf_token %}
+      {% endif %}
 
-		{% if form.errors %}
-		<div class="alert alert-danger alart-dismissable" role ="alert">
-                <button class="close" data-dismiss="alert">
-                    <small><sup>x</sup></small>
-                  </button>
-               
+      <!--Form created as SignUpForm is displayed here-->
+      {{ form.as_p }}
 
-               {% for field in form%}
-               	{% if field.errors%}
-               		{{field.errors}}
-               	{% endif%}
-
-               	{% endfor %}
-
-
-              </div>
-
-
-
-		{% endif %}
-
-        <!--Form created as SignUpForm is displayed here-->
-		{{ form.as_p }}
-
-
-		<input type="submit" value="Register" class=" btn btn-secondary">
-	</form>
+      <input type="submit" value="Register" class="btn btn-primary" />
+    </form>
+  </div>
 </div>
 {% endblock %}
+
