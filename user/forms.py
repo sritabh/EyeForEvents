@@ -46,11 +46,11 @@ class SignUpForm(UserCreationForm):
 	    self.fields['password1'].widget.attrs['class'] = 'form-control'
 	    self.fields['password1'].widget.attrs['placeholder'] = 'Password'
 	    self.fields['password1'].label = ''
-	    self.fields['password1'].help_text = '<ul class="form-text text-muted small"><li>Your password must contain at least 8 characters.</li></ul>'
+	    self.fields['password1'].help_text = '<ul class="form-text text-muted small" style="text-align:left;"><li>Your password must contain at least 8 characters.</li></ul>'
 
 	    self.fields['password2'].widget.attrs['class'] = 'form-control'
 	    self.fields['password2'].widget.attrs['placeholder'] = 'Confirm Password'
 	    self.fields['password2'].label = ''
-	    self.fields['password2'].help_text = '<span class="form-text text-muted"><small>Enter the same password as before, for verification.</small></span>'
+	    self.fields['password2'].help_text = '<span class="form-text text-muted" style="text-align:left;"><small>Enter the same password as before, for verification.</small></span>'
   
 

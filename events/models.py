@@ -23,6 +23,9 @@ class Event(models.Model):
     pub_date = models.DateTimeField('Created On',auto_now_add=True) #Will be used to check how old is the posted events
     def __str__(self):
         return self.name #For Debugging purpose
+    def registerationClosed(self):
+        #IF last_date is passed show registereation is closed
+        return self.last_date < timezone.now()
 
 class Participant(models.Model):
     """

@@ -1,41 +1,57 @@
 {% extends 'user/base.html' %} {% block content %}
 {% load custom_tags %}
+{% load static %}
 <html>
     <script>
         function showCountDown(lastDate){
-            console.log(new Date(lastDate))
+            
             //countdown till last date of registeration
             var countDownDate = new Date(lastDate).getTime();
             var x = setInterval(function() {
+                document.getElementById("countdown").style.display = "block";
+                document.getElementById("countdown").style.animation = "fadeIn 0.3s";
+                // Get today's date and time
+                var now = new Date().getTime();
 
-            // Get today's date and time
-            var now = new Date().getTime();
+                // Find the distance between now and the count down date
+                var distance = countDownDate - now;
 
-            // Find the distance between now and the count down date
-            var distance = countDownDate - now;
+                // Time calculations for days, hours, minutes and seconds
+                var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                var seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-            // Time calculations for days, hours, minutes and seconds
-            var days = Math.floor(distance / (1000 * 60 * 60 * 24));
-            var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-            var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+                // Display the result in the element with id="demo"
+                document.getElementById("day").innerHTML = days + "d ";
+                document.getElementById("hours").innerHTML = hours + "h ";
+                document.getElementById("minutes").innerHTML = minutes + "m ";
+                document.getElementById("seconds").innerHTML = seconds + "s ";
 
-            // Display the result in the element with id="demo"
-            document.getElementById("day").innerHTML = days + "d ";
-            document.getElementById("hours").innerHTML = hours + "h ";
-            document.getElementById("minutes").innerHTML = minutes + "m ";
-            document.getElementById("seconds").innerHTML = seconds + "s ";
-
-            // If the count down is finished, write some text
-            if (distance < 0) {
-                clearInterval(x);
-                document.getElementById("demo").innerHTML = "EXPIRED";
-            }
+                // If the count down is finished, write some text
+                if (distance < 0) {
+                    clearInterval(x);
+                    document.getElementById("timerContainer").innerHTML =`<center><h2 id="countdownbx" style="text-align:centre;color:white;">Expired</h2><center>`;
+                    //If registeration expired don't allow registeration
+                    document.getElementById("eventRegisterationForm").style.display = "none";
+                }
+                else {
+                    document.getElementById("eventRegisterationForm").style.display = "block";
+                }
             }, 1000);
         }
     </script>
+    <style>
+        @keyframes fadeIn {
+            0% {opacity: 0;}
+            100% {opacity: 1;}
+            }
+         @-webkit-keyframes fadeIn {
+            0% {opacity: 0;}
+            100% {opacity: 1;}
+         }
+    </style>
     <body onload="showCountDown('{{event.last_date.isoformat}}')">
-        {% load static %}
         {% if msg %}<p><strong>{{ msg }}</strong></p>{% endif %}
 
         <div class="card text-white pb-0 text-center" id="card1">
@@ -44,7 +60,7 @@
         <br><br><br>
         <h1 class="card-title"> {{event.name}} </h1>
         <p id="event" class="card-text">{{ event.description }}</p><br>
-        <form action="Register" method="post">
+        <form style="display:none;" id="eventRegisterationForm" action="Register" method="post">
             {% csrf_token %}
             
             <!--Filling out the details in the views.py-->
@@ -62,17 +78,18 @@
         </div>
         <br><br>
         <!--<strong>Description: </strong>-->
-        <strong>Description: </strong>
-        <div id = "countdown" class="card text-center bg-danger">
-                    <h4 id="countdownbx" class="card-title text-black">
-                    Registeration for <i> {{event.name}} </i> : <br></h4>
-                    <br>
-                    <div class="class row " style="display: grid; grid-template-columns: auto auto auto auto; grid-column-gap: 30px;margin-left: 5% ;margin-bottom: 5% ;width:90% ;height:300%;">
-                        <div id="day" class="card-text col text-dark" style="font-size: 200%; font-weight: bold ;background-color:#00000020; padding-top:2%; padding-bottom:2%;">NA</div>
-                        <div id="hours" class="card-text col text-dark" style="font-size: 200%; font-weight: bold ;background-color:#00000020; padding-top:2%; padding-bottom:2%;">NA</div>
-                        <div id="minutes" class="card-text col text-light" style="font-size: 200%; font-weight: bold ; font-style: italic;background-color:#00000020; padding-top:2%; padding-bottom:2%;">NA</div>
-                        <div id="seconds" class="card-text col text-light" style="font-size: 200%; font-weight: bold ; font-style: italic;background-color:#00000020; padding-top:2%; padding-bottom:2%;">NA</div>
-                    </div>
+        <div id = "countdown" style="display:none;" class="card text-center bg-danger">
+            <h4 id="countdownbx" class="card-title text-black">
+            Registeration for <i> {{event.name}} </i> : <br></h4>
+            <br>
+            <div id="timerContainer">
+                <div class="class row " style="display: grid; grid-template-columns: auto auto auto auto; grid-column-gap: 30px;margin-left: 5% ;margin-bottom: 5% ;width:90% ;height:300%;">
+                    <div id="day" class="card-text col text-dark" style="font-size: 200%; font-weight: bold ;background-color:#00000020; padding-top:2%; padding-bottom:2%;">NA</div>
+                    <div id="hours" class="card-text col text-dark" style="font-size: 200%; font-weight: bold ;background-color:#00000020; padding-top:2%; padding-bottom:2%;">NA</div>
+                    <div id="minutes" class="card-text col text-light" style="font-size: 200%; font-weight: bold ; font-style: italic;background-color:#00000020; padding-top:2%; padding-bottom:2%;">NA</div>
+                    <div id="seconds" class="card-text col text-light" style="font-size: 200%; font-weight: bold ; font-style: italic;background-color:#00000020; padding-top:2%; padding-bottom:2%;">NA</div>
+                </div>
+            </div>
                 
         </div>
 
@@ -80,16 +97,24 @@
         <br><br><br>
 
         <br>
-        <strong>Event date: </strong>{{ event.event_date }}
-        <br>
+        <div id="eventExtraDetails" style="color:white;">
+            <strong>Event date: </strong>{{ event.event_date }}
+            <br>
 
-        <strong>Max Capacity: </strong>{{ event.max_capacity }}
-        <br>
-        <strong>Slots Available: </strong>{{ event.max_capacity|subtract:event.participant_set.all }}
-        <br>
-        {% for participant in event.participant_set.all %}
-            <li>{{ participant.name }} </li>
-        {% endfor %}
+            {%if event.max_capacity > 0%}
+                <strong>Max Capacity: </strong>{{ event.max_capacity }}
+                <br>
+                <strong>Slots Available: </strong>{{ event.max_capacity|subtract:event.participant_set.all }}
+                <br>
+            {%endif%}
+            {% if isCreator %}
+            <br>
+            <h3>Participants</h3>
+            {% for participant in event.participant_set.all %}
+                <li>{{ participant.name }} </li>
+            {% endfor %}
+            {% endif %}
+        </div>
 
         <br>
 

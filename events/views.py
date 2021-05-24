@@ -39,9 +39,13 @@ def create_event(request):
 def detail(request, event_id):
     try:
         event = Event.objects.get(pk=event_id)
+        isCreator = False
+        if request.user.is_authenticated:
+            if request.user == event.created_by:
+                isCreator = True
     except Event.DoesNotExist:
         raise Http404("Event does not exist")
-    return render(request, 'events/event_details.html', {'event': event,'event_by':event.created_by})
+    return render(request, 'events/event_details.html', {'event': event,'event_by':event.created_by,"isCreator":isCreator})
 
 
 def successFull(request):
@@ -72,6 +76,11 @@ def registerForEvent(request, event_id):
         """
         if event.participant_set.all().count()>=event.max_capacity and event.max_capacity !=0:
             return render(request, 'events/event_details.html', {'event': event,'event_by':event.created_by,'msg':"No slot/seat is available, event is full!"})
+        """
+        Don't allow registeration if time is already passed
+        """
+        if event.registerationClosed():
+            return render(request, 'events/event_details.html', {'event': event,'event_by':event.created_by,'msg':"Event registeration is closed!"})
         user.participated_in.add(event)
         #Participant form is invisible to the user will be filled automatically by fetching whether the user is logged in or not
         form = ParticipantForm(data=participant_details) 
@@ -79,5 +88,5 @@ def registerForEvent(request, event_id):
         if form.is_valid():
             form.save()
             event.save()
-            return render(request, 'events/error.html', {'form': form,'msg':"Successfully registered"})
-    return render(request, 'events/error.html', {'form': form,'msg':"Something went wrong!"})
+            return render(request,'user/profile.html',{'msg':'Registered for the event successfully!'})
+    return render(request,'user/profile.html',{'msg':'Something went wrong while registering for the event'})
