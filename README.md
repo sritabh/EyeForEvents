@@ -15,7 +15,10 @@
 ## Team Id
 BFH/recFqPDxQAhif8mzp/2021
 ## Link to product walkthrough
-[link to video]
+
+<a href="https://www.loom.com/share/9e93165490214ef5981990f0992fe8ae">Walkthrough video</a>
+<br>
+
 ## How it Works ?
 1. The user creates the account registering using emails.
 2. The who is authenticated(registered) can create events providing details about the event
