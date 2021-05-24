@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 from pathlib import Path
 #import secretFile #File containing value of SECRET_KEY
 import os
+import secretFile #File containing value of SECRET_KEY
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -23,7 +24,18 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.environ['SECRET_KEY'] #ADD Secret key from secret environment
+
+#SECRET_KEY = secretFile.key_value #ADD Secret key from secretFile
 # SECURITY WARNING: don't run with debug turned on in production!
+
+DEFAULT_FILE_STORAGE = 'EyeForEvents.backend.AzureMediaStorage'
+STATICFILES_STORAGE  = 'EyeForEvents.backend.AzureStaticStorage'
+AZURE_STORAGE_KEY = os.environ['AZURE_STORAGE_KEY']
+AZURE_ACCOUNT_NAME = "eyeforevents"  # your account name
+AZURE_MEDIA_CONTAINER = os.environ.get('AZURE_MEDIA_CONTAINER', 'media')
+AZURE_STATIC_CONTAINER = os.environ.get('AZURE_STATIC_CONTAINER', 'static')
+AZURE_CUSTOM_DOMAIN = f'{AZURE_ACCOUNT_NAME}.blob.core.windows.net'  # Files URL
+
 DEBUG = True
 
 ALLOWED_HOSTS = ['*']
@@ -40,6 +52,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'storages',
 ]
 
 MIDDLEWARE = [
@@ -84,7 +97,7 @@ DATABASES = {
 }
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-MEDIA_URL = '/media/'
+#MEDIA_URL = '/media/'
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
@@ -118,9 +131,12 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
-STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+#STATIC_URL = '/static/'
+STATIC_URL = f'https://{AZURE_CUSTOM_DOMAIN}/{AZURE_STATIC_CONTAINER}/'
+MEDIA_URL = f'https://{AZURE_CUSTOM_DOMAIN}/{AZURE_MEDIA_CONTAINER}/'
 
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+ 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
