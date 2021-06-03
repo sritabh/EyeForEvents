@@ -7,7 +7,6 @@
  Users can now keep an EYE on the events around them easily.
  <br>
  <br>
- Check the running version <a href="https://eyeforevents.azurewebsites.net/">here!</a>
 ## Team members
 1. <a href="https://github.com/anandalisha">Alisha Anand</a>
 2. <a href="https://github.com/anusham14">Anusha Maiti</a>
